@@ -1,0 +1,3 @@
+[submodule "Code/readline"]
+	path = Code/readline
+	url = https://git.savannah.gnu.org/git/readline.git/
