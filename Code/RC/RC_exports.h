@@ -5,7 +5,7 @@
 #define RC__GOTO(__rc, __label)                                                                   \
     do                                                                                            \
     {                                                                                             \
-        if (RC__SUCCESS != (__rc))                                                                \
+        if (RC__SUCCESS != (__rc) && RC__UNINITIALIZED != (__rc))                                 \
         {                                                                                         \
             (void)printf("RC %s (%s:%d)[%s]", RC__strings[(__rc)], __FILE__, __LINE__, __func__); \
         }                                                                                         \
