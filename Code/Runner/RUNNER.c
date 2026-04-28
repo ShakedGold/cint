@@ -82,9 +82,11 @@ static RC_t runner__call(RUNNER__command_t *command)
 {
     RC_t rc = RC__UNINITIALIZED;
     ffi_cif cif = {0};
-    ffi_type *args[RUNNER__MAX_ARGS_COUNT] = {0};
-    void *values[RUNNER__MAX_ARGS_COUNT] = {0};
     ffi_status ffi_result = FFI_BAD_ABI;
+
+    // we add one more item because libffi requires a NULL to mark the end of the array
+    ffi_type *args[RUNNER__MAX_ARGS_COUNT + 1] = {0};
+    void *values[RUNNER__MAX_ARGS_COUNT + 1] = {0};
 
     RC__IF_NULL_SET_AND_GOTO(command, rc, cleanup);
 
