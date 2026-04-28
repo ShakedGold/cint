@@ -5,10 +5,6 @@
 #include "RUNNER_exports.h"
 
 #define RUNNER__MAX_TOKEN_AMOUNT (256)
-#define RUNNER__parse_arg(__command, __context, __arg, __ffi_type, __lexer_field) \
-    do                                                                            \
-    {                                                                             \
-    } while (0)
 #define RUNNER__is_token_argument(__token) (CLEX_intlit == (__token) || CLEX_dqstring == (__token))
 
 static RC_t runner__parse_symbol_name(LEXER__lexer_t *context, RUNNER__command_t *command)
@@ -50,7 +46,6 @@ static RC_t runner__add_argument(LEXER__lexer_t *context, RUNNER__command_t *com
         RC__ON_ERROR_GOTO(rc, cleanup);
         break;
     case CLEX_intlit:
-        RUNNER__parse_arg(command, context, &current_arg, ffi_type_sint, int_number);
         current_arg.type = &ffi_type_sint;
         (void)memcpy(&current_arg.value, &context->lexer.int_number, sizeof(context->lexer.int_number));
 
