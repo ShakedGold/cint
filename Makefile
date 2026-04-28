@@ -17,7 +17,8 @@ OUTPUT_PROJECT_PATH := $(BUILD_DIR)/$(PROJECT)
 
 MODULES :=  Entrypoint \
 			Lexer \
-			Prompt
+			Prompt \
+			Runner
 
 SRC_DIRS := $(addprefix $(SRC_BASE)/,$(MODULES))
 SRCS     := $(shell find $(SRC_DIRS) -name "*.c")
@@ -52,6 +53,7 @@ clean:
 	rm -rf $(BUILD_PATH)
 
 purge: clean
-	make readline_clean
+	make readline_purge
+	make libffi_purge
 
-.PHONY: all clean prep
+.PHONY: all clean prep purge

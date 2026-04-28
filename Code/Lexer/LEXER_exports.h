@@ -5,7 +5,6 @@
 #include "RC/RC_exports.h"
 #include "WarnSuppress/WARN_SUPPRESS_exports.h"
 
-#define STB_C_LEXER_IMPLEMENTATION
 WARN_SUPPRESS__PUSH
 WARN_SUPPRESS__IGNORE(WARN_SUPPRESS__IGNORE_UNUSED_FUNCTION)
 WARN_SUPPRESS__IGNORE(WARN_SUPPRESS__IGNORE_UNUSED_VARIABLE)
@@ -15,7 +14,7 @@ WARN_SUPPRESS__POP
 
 #define LEXER__STRING_STORE_MAX_LENGTH (1024)
 
-typedef int LEXER__token_t;
+typedef long int LEXER__token_t;
 
 typedef struct LEXER__lexer_s
 {

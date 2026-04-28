@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "Prompt/PROMPT_exports.h"
+#include "Runner/RUNNER_exports.h"
 
 #define MAX_LINE (1024)
 
@@ -13,7 +14,11 @@ int main(void)
 
     do
     {
+        line_length = MAX_LINE;
         rc = PROMPT__get_line(line, &line_length);
+        RC__ON_ERROR_GOTO(rc, cleanup);
+
+        rc = RUNNER__run(line, line_length);
         RC__ON_ERROR_GOTO(rc, cleanup);
     } while (0 != line_length);
 

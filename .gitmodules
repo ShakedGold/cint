@@ -1,3 +1,6 @@
 [submodule "Code/readline"]
 	path = Code/readline
 	url = https://git.savannah.gnu.org/git/readline.git/
+[submodule "Code/libffi"]
+	path = Code/libffi
+	url = git@github.com:libffi/libffi.git

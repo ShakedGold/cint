@@ -2,14 +2,14 @@
 
 #include <stdio.h>
 
-#define RC__GOTO(__rc, __label)                                                                   \
-    do                                                                                            \
-    {                                                                                             \
-        if (RC__SUCCESS != (__rc) && RC__UNINITIALIZED != (__rc))                                 \
-        {                                                                                         \
-            (void)printf("RC %s (%s:%d)[%s]", RC__strings[(__rc)], __FILE__, __LINE__, __func__); \
-        }                                                                                         \
-        goto __label;                                                                             \
+#define RC__GOTO(__rc, __label)                                                                  \
+    do                                                                                           \
+    {                                                                                            \
+        if (RC__SUCCESS != (__rc) && RC__UNINITIALIZED != (__rc))                                \
+        {                                                                                        \
+            (void)printf("%s (%s:%d)[%s]\n", RC__strings[(__rc)], __FILE__, __LINE__, __func__); \
+        }                                                                                        \
+        goto __label;                                                                            \
     } while (0)
 
 #define RC__SET_RC_AND_GOTO(__rc, __rc_value, __label) \
@@ -17,6 +17,13 @@
     {                                                  \
         __rc = __rc_value;                             \
         RC__GOTO(__rc_value, __label);                 \
+    } while (0)
+
+#define RC__SET_RC_AND_GOTO_NO_PRINT(__rc, __rc_value, __label) \
+    do                                                          \
+    {                                                           \
+        __rc = __rc_value;                                      \
+        goto __label;                                           \
     } while (0)
 
 #define RC__IF_NULL_SET_AND_GOTO(__expression, __rc, __label)               \
