@@ -24,7 +24,7 @@ RC_t PROMPT__get_line(char *line, size_t *line_length)
     if (NULL == out_line)
     {
         *line_length = 0;
-        RC__SET_RC_AND_GOTO(rc, RC__SUCCESS, cleanup);
+        RC__SET_RC_AND_GOTO_NO_PRINT(rc, RC__PROMPT__EOF, cleanup);
     }
 
     add_history(out_line);

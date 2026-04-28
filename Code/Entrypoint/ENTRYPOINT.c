@@ -16,6 +16,11 @@ int main(void)
     {
         line_length = MAX_LINE;
         rc = PROMPT__get_line(line, &line_length);
+        if (RC__PROMPT__EOF == rc)
+        {
+            break;
+        }
+
         RC__ON_ERROR_GOTO(rc, cleanup);
 
         rc = RUNNER__run(line, line_length);
