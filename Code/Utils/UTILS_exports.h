@@ -1,10 +1,11 @@
 #pragma once
 
 #define UTILS__DEFER(__func) __attribute__((cleanup(__func)))
-
+#define UTILS__arr_len(__arr) sizeof((__arr)) / sizeof((__arr)[0])
 #define UTILS__DEFER_FREE __attribute__((cleanup(UTILS__cleanup_free)))
+#define UTILS__LIBC_ERROR (-1)
 
-static void UTILS__cleanup_free(void *p)
+__attribute__((unused)) static void UTILS__cleanup_free(void *p)
 {
     void **ptr = NULL;
 

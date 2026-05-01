@@ -44,6 +44,15 @@
         }                                \
     } while (0)
 
+#define RC__ON_ERROR_GOTO_NO_PRINT(__rc, __label) \
+    do                                            \
+    {                                             \
+        if (RC__SUCCESS != (__rc))                \
+        {                                         \
+            goto __label;                         \
+        }                                         \
+    } while (0)
+
 typedef enum RC_s
 {
     RC__UNINITIALIZED = -1,

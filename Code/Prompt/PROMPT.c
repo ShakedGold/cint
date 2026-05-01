@@ -8,6 +8,7 @@
 #include "PROMPT_exports.h"
 #include "RC/RC_exports.h"
 #include "Utils/UTILS_exports.h"
+#include "sbase/unescape.h"
 
 #define PROMPT__PROMPT ("@ ")
 
@@ -28,6 +29,9 @@ RC_t PROMPT__get_line(char *line, size_t *line_length)
     }
 
     add_history(out_line);
+
+    // We unescape after adding to the history because the history should be escaped
+    (void)unescape(out_line);
 
     (void)strncpy(line, out_line, *line_length);
     *line_length = strnlen(out_line, *line_length);

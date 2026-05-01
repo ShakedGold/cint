@@ -38,7 +38,7 @@ include $(PWD)/Make/static_libraries.mk
 
 $(OUTPUT_PROJECT_PATH): $(OBJS) $(STATIC_LIBS)
 	$(LD_ECHO)
-	$(CC) $(CFLAGS) -l:libncurses.so $^ -o $@
+	$(CC) $(CFLAGS) -l:libdl.a -l:libncurses.so $^ -o $@
 
 $(OBJ_BASE)/%.o: $(SRC_BASE)/%.c
 	$(CC_ECHO)
@@ -56,4 +56,7 @@ purge: clean
 	make readline_purge
 	make libffi_purge
 
-.PHONY: all clean prep purge
+compile_commands:
+	sh -c "make --always-make --dry-run 	 | grep -wE 'gcc|g\+\+|c\+\+' 	 | grep -w '\-c' 	 | sed 's|cd.*.\&\&||g' 	 | jq -nR '[inputs|{directory:\".\", command:., file: match(\" [^ ]+\$\").string[1:]}]'" > compile_commands.json
+
+.PHONY: all clean prep purge compile_commands

@@ -11,6 +11,9 @@ int main(void)
     RC_t rc = RC__UNINITIALIZED;
     char line[MAX_LINE] = {0};
     size_t line_length = MAX_LINE;
+    const char *libraries[RUNNER__MAX_LIBRARY_COUNT] = {0};
+
+    (void)RUNNER__init(libraries);
 
     do
     {
@@ -29,5 +32,6 @@ int main(void)
 
     rc = RC__SUCCESS;
 cleanup:
+    RUNNER__fini();
     return (int)rc;
 }
