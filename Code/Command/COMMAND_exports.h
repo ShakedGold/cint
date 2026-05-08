@@ -12,7 +12,7 @@
 typedef enum COMMAND__command_type_e
 {
     COMMAND__COMMAND_TYPE__RUN = 0,
-    COMMAND__COMMAND_TYPE__INFORMATION
+    COMMAND__COMMAND_TYPE__INFORMATION,
 } COMMAND__command_type_t;
 
 typedef struct COMMAND__arg_s

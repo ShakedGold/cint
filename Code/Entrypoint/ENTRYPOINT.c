@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #define _GNU_SOURCE
 #include <bits/types/siginfo_t.h>
@@ -34,12 +35,9 @@ static void sigsegv_handler(int signal_number, siginfo_t *info, void *context)
     longjmp(entrypoint__context_g, 1);
 }
 
-int main(void)
+static RC_t register_sigsegv(void)
 {
     RC_t rc = RC__UNINITIALIZED;
-    char line[MAX_LINE] = { 0 };
-    size_t line_length = MAX_LINE;
-    const char *libraries[RUNNER__MAX_LIBRARY_COUNT] = { 0 };
     struct sigaction action = { 0 };
     int sigaction_result = UTILS__LIBC_ERROR;
 
@@ -52,7 +50,24 @@ int main(void)
         RC__SET_RC_AND_GOTO(rc, RC__ENTRYPOINT__FAILED_TO_REGISTER_SIGTERM_HANDLER, cleanup);
     }
 
+    rc = RC__SUCCESS;
+cleanup:
+    return rc;
+}
+
+int main(int argc, char *argv[])
+{
+    RC_t rc = RC__UNINITIALIZED;
+    char line[MAX_LINE] = { 0 };
+    size_t line_length = MAX_LINE;
+    const char *libraries[RUNNER__MAX_LIBRARY_COUNT] = { 0 };
+
+    (void)memcpy(libraries, argv + 1, (size_t)argc * sizeof(*argv));
+
     (void)RUNNER__init(libraries);
+
+    rc = register_sigsegv();
+    RC__ON_ERROR_GOTO(rc, cleanup);
 
     setjmp(entrypoint__context_g);
 

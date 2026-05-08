@@ -1,4 +1,5 @@
 #include <dlfcn.h>
+#include <ffi.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,9 +9,6 @@
 #include "COMMAND_parsers.h"
 #include "Lexer/LEXER_exports.h"
 #include "RC/RC_exports.h"
-#include "ffi.h"
-
-#define COMMAND__is_token_argument(__token) (CLEX_intlit == (__token) || CLEX_dqstring == (__token))
 
 typedef void (*command__callback_t)(void);
 
@@ -88,8 +86,7 @@ static RC_t command__run_command(COMMAND__command_t *command, command__callback_
     RC_t rc = RC__UNINITIALIZED;
     ffi_cif cif = { 0 };
     ffi_status ffi_result = FFI_BAD_ABI;
-    // we add one more item because libffi requires a NULL to mark the end of
-    // the array
+    // we add one more item because libffi requires a NULL to mark the end of the array
     ffi_type *args[COMMAND__MAX_ARGS_COUNT + 1] = { 0 };
     void *values[COMMAND__MAX_ARGS_COUNT + 1] = { 0 };
 
