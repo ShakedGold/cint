@@ -1,5 +1,6 @@
 #include "LEXER_exports.h"
 #include "RC/RC_exports.h"
+#include "WarnSuppress/WARN_SUPPRESS_exports.h"
 
 #define STB_C_LEXER_IMPLEMENTATION
 WARN_SUPPRESS__PUSH
@@ -16,7 +17,9 @@ RC_t LEXER__new(LEXER__lexer_t *context, const char *contents, size_t length)
     RC__IF_NULL_SET_AND_GOTO(context, rc, cleanup);
     RC__IF_NULL_SET_AND_GOTO(contents, rc, cleanup);
 
-    stb_c_lexer_init(&context->lexer, contents, contents + length, context->string_store, sizeof(context->string_store));
+    stb_c_lexer_init(
+        &context->lexer, contents, contents + length, context->string_store, sizeof(context->string_store)
+    );
 
     rc = RC__SUCCESS;
 cleanup:

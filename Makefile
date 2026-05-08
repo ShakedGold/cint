@@ -18,6 +18,7 @@ OUTPUT_PROJECT_PATH := $(BUILD_DIR)/$(PROJECT)
 MODULES :=  Entrypoint \
 			Lexer \
 			Prompt \
+			Command \
 			Runner
 
 SRC_DIRS := $(addprefix $(SRC_BASE)/,$(MODULES))
@@ -57,6 +58,6 @@ purge: clean
 	make libffi_purge
 
 compile_commands:
-	sh -c "make --always-make --dry-run 	 | grep -wE 'gcc|g\+\+|c\+\+' 	 | grep -w '\-c' 	 | sed 's|cd.*.\&\&||g' 	 | jq -nR '[inputs|{directory:\".\", command:., file: match(\" [^ ]+\$\").string[1:]}]'" > compile_commands.json
+	bear -- make
 
 .PHONY: all clean prep purge compile_commands
